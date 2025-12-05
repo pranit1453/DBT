@@ -1,0 +1,76 @@
+Display the Employee Name, Job, and Start Date of Employees hired from February 1981 to May 1981.
+Ans select ename,job,hiredate from emp where hiredate between '1981-02-01' and '1981-05-31';
+
+Display the Name and Hiredate of every Employee who was hired in 1982
+Ans. select ename,hiredate from emp where year(hiredate)=1982 ;
+
+Write a query to display the current date. Label the column as Current Date.
+Ans select curdate() as 'Current Date' ;
+
+Display the Employee’s Name, Hiredate, Salary and Review Date, which is first Monday after six months of service.
+
+Modify the query to display the dates as “Sunday, the Seventh of September, 1981”.
+select ename, Date_Format(hiredate, '%W, the %D of %M, %Y') AS 'Formatted hireDate' from emp;
+Create a query to display the name and salary for all Employees. Format the salary to be 15 characters long by adding ‘$’.
+Ans SELECT ename AS 'Employee Name', CONCAT('$', LPAD(sal, 14, ' ')) AS 'Formatted Salary'FROM emp;
+
+Display the Name, Hiredate and day of the week on which the employees started. Order the results by the Day of the week starting with Monday.
+Ans SELECT ename AS 'Employee Name',hiredate AS 'Hire Date',DAYNAME(hiredate) AS 'Day of Week'FROM emp ORDER BY CASE DAYOFWEEK(hiredate WHEN 1 THEN 7 ELSE DAYOFWEEK(hiredate) - 1  END;
+
+Display details of orders received in the year 1986. 
+Ans select * from ord where Year(orderdate)=1986;
+
+Write a query to find out the DAY (for example, SUNDAY) of the current date.
+Ans SELECT DAYNAME(CURDATE()) AS 'Today';
+
+Display the name and the date of joining of the employees who belong to department number 10. The date of joining should be formatted. For eg. if it is ‘10-JUN-97’ it should be displayed as Fifteenth JUNE, 1997. The name of the employee should be in upper case.
+Ans SELECT UPPER(ename) AS 'Employee Name', DATE_FORMAT(hiredate, '%D %M, %Y') AS 'Formatted Join Date'FROM emp WHERE deptno = 10;
+
+Consider the Ord table. Find the difference between the Order Date and Ship Date in months as well as days. Label the columns appropriately.
+Ans SELECT ordid AS 'Order ID',orderdate AS 'Order Date', shipdate AS 'Ship Date', STAMPDIFF(MONTH, orderdate, shipdate) AS 'Difference in Months', DATEDIFF(shipdate, orderdate) AS 'Difference in Days' FROM Ord;
+
+List employee details who have joined in December.
+Ans SELECT *FROM emp WHERE MONTH(hiredate) = 12;
+
+Display day on which KING joined.
+Ans SELECT  ename AS 'Employee Name', hiredate AS 'Hire Date', DAYNAME(hiredate) AS 'Day of Week'FROM emp WHERE UPPER(ename) = 'KING';
+
+Display month on which MARTIN joined.
+Ans SELECT ename AS 'Employee Name', MONTHNAME(hiredate) AS 'Joining Month'FROM emp WHERE UPPER(ename) = 'MARTIN';
+
+Find number of days elapsed between today’s date and hiredate of ‘ADAMS’.
+Ans SELECT ename AS 'Employee Name', hiredate AS 'Hire Date',DATEDIFF(CURDATE(), hiredate) AS 'Days Elapsed'FROM emp WHERE UPPER(ename) = 'ADAMS';
+
+Print the date, 15 days alter today’s date.
+Ans SELECT DATE_ADD(CURDATE(), INTERVAL 15 DAY) AS 'Date After 15 Days';
+
+List all employee hired in the month of December.
+Ans SELECT *FROM emp WHERE MONTH(hiredate) = 12;
+
+List all employee hired after 1980.
+Ans SELECT *FROM emp WHERE YEAR(hiredate) > 1980;
+
+Display names and jobs of employee in the format SMITH-CLERK.
+Ans SELECT CONCAT(UPPER(ename), '-', UPPER(job)) AS 'Employee-Job'FROM emp;
+
+Show the length of names in EMP table. Eliminate duplicate length. Do not show the names.
+Ans SELECT DISTINCT LENGTH(ename) AS 'Name Length'FROM emp;
+
+List the names and hiredate of EMP in dept 20, display hiredate formatted as 12/03/1984.
+Ans SELECT ename AS 'Employee Name',DATE_FORMAT(hiredate, '%d/%m/%Y') AS 'Formatted Hire Date'FROM emp WHERE deptno = 20;
+
+Find the day of week on which SMITH joined.
+Ans SELECT ename AS 'Employee Name', hiredate AS 'Hire Date', DAYNAME(hiredate) AS 'Day of Week'FROM emp WHERE UPPER(ename) = 'SMITH';
+
+Retrieve the ANALYST record with hiredate formatted as ‘The 3rd of Oct. 1984’.
+Ans SELECT ename AS 'Employee Name', CONCAT('The ', DATE_FORMAT(hiredate, '%D'), ' of ', DATE_FORMAT(hiredate, '%b. %Y')) AS 'Formatted Hire Date'FROM emp WHERE UPPER(job) = 'ANALYST';
+
+Calculate the total compensation expensive for each dept in 1 year. Assume that employees, who don't earn commission, receive non-monetary benefits than are worth Rs.1000 a month.
+Ans SELECT deptno AS 'Department Number', SUM((sal * 12) + IFNULL(comm, 0) + IF(comm IS NULL, 1000 * 12, 0)) AS 'Annual Compensation'FROM emp GROUP BY deptno;
+
+Display the Names of the Managers as follows-
+a If the employee code is 7788 the Manager is CLARK
+b If the employee code is 7698 the Manager is BLAKE
+c If the employee code is 7566 the Manager is JONES
+d For all other Employees the Manager is KING
+Ans SELECT empno AS 'Employee Code', ename AS 'Employee Name', CASE empno  WHEN 7788 THEN 'CLARK'        WHEN 7698 THEN 'BLAKE'  WHEN 7566 THEN 'JONES' ELSE 'KING' END AS 'Manager'FROM emp;

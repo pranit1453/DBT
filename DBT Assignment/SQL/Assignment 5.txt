@@ -1,0 +1,51 @@
+Retrieve the entire contents of EMP table.
+Ans  desc emp;
+
+Print the name of employees
+Ans select ename from emp;.
+
+Retrieve the list of names and jobs of employees.
+Ans select ename,job from emp;
+
+List of various department available from dept table.
+Ans select dname from dept;
+
+List all information about the Employees of the EMP table.
+Ans select * from emp;
+
+Show the information of the Department table.
+desc dept;
+
+Display the contents of the column Empno, Ename as Employee Name and Sal from the Emp table.
+Ans select empno,ename as Employee_Name ,sal from emp;
+
+Display the Job, Comm and Ename from the Emp table with Customized column headings.
+Ans select job as job_title,comm as comission, ename as NameEmp from emp;
+
+Display the location as “Location” and names of all the departments as “Department Names”.
+Ans select loc as "Location" , dName as "Department Name" from dept;
+
+List the different Managers Codes.
+Ans select empno,job from emp where job="manager";
+
+Write a query, which concatenates the Emp No, Name and Mgr Code. Display output with spaces in the columns. 
+Ans select concat(empno,' ',ename,' ',mgr) as details from emp;	
+
+Create a query to display all the data from the EMP table, separate each column by a comma.
+Ans SELECT CONCAT(empno, ',', ename, ',', job, ',', mgr, ',', hiredate, ',', sal, ',', comm, ',', deptno) AS emp_record from emp;
+
+Modify the above query to add a column that will subtract the Old Salary from the New Salary. 
+Ans SELECT CONCAT(empno, ',', ename, ',', job, ',', mgr, ',', hiredate, ',', sal, ',', comm, ',', deptno, ',', (sal * 1.10 - sal)) AS emp_record from emp;
+
+Write a query that produces the following for each employee as- 
+<employee name> earns <salary> monthly, but wants salary <3 times salary>. Label the columns Dream Salaries.
+Ans SELECT CONCAT(ename, ' earns ', sal, ' monthly, but wants salary ', sal * 3) AS `Dream Salaries`FROM emp;
+
+Display different types of positions available in the Company.
+Ans select DISTINCT job as Position from emp;
+
+Using the sales table, you need to report the following 
+Appropriate column heading should be given for all the columns.
+Ans SELECT REPID AS "Sales Rep ID", CUSTID AS "Customer ID", CUSTNAME AS "Customer Name",PRODID AS "Product ID", PRODNAME AS "Product Name", AMOUNT AS "Sale Amount" FROM sales;
+
+

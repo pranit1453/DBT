@@ -1,0 +1,49 @@
+1.Retrieve the entire contents of EMP table.
+mysql> select * from emp;
+
+2.Print the name of employees.
+mysql> select ename from emp;
+
+3.Retrieve the list of names and jobs of employees.
+mysql> select ename,job from emp;
+
+4.List of various department available from dept table.
+mysql> select dname from dept;
+
+5.List all information about the Employees of the EMP table.
+mysql> select * from emp;
+
+6.Show the information of the Department table.
+mysql> select * from dept;
+
+7.Display the contents of the column Empno, Ename as Employee Name and Sal from the Emp table.
+mysql> select empno,ename as 'Employee Name',sal from emp;
+
+8.Display the Job, Comm and Ename from the Emp table with Customized column headings.
+mysql> select job as 'Job Title', comm as 'Commission', ename as 'Employee Name' from emp;
+
+9.Display the location as “Location” and names of all the departments as “Department Names”.
+mysql> select loc as 'Location', dname as 'Department Name' from dept;
+
+10.List the different Managers Codes.
+mysql> select mgr as 'Manager Codes' from emp;
+
+11.Write a query, which concatenates the Emp No, Name and Mgr Code. Display output with spaces in the columns. 
+mysql> Select concat(empno, ' ', ename, ' ', mgr) AS 'Employee Info' FROM EMP;
+
+12.Create a query to display all the data from the EMP table, separate each column by a comma.
+mysql> select concat(empno, ', ',ename, ', ',job, ', ', mgr, ', ', hiredate, ', ',sal, ', ',comm, ', ',deptno) AS 'Employee Record'FROM EMP;
+
+13.Modify the above query to add a column that will subtract the Old Salary from the New Salary. 
+mysql> select sal, (sal-750) AS 'Updated Salary' from emp;
+
+14.Write a query that produces the following for each employee as- 
+<employee name> earns <salary> monthly, but wants salary <3 times salary>. Label the columns Dream Salaries.
+mysql> select concat(ename, ' earns ', sal, ' monthly, but wants salary ', sal * 3) AS 'Dream Salaries' from emp;
+
+15.Display different types of positions available in the Company.
+mysql> select distinct job AS 'Position' from emp;
+
+16.Using the sales table, you need to report the following 
+a.Appropriate column heading should be given for all the columns.
+mysql> select repid AS 'Sales Rep ID', custid AS 'Customer ID', custname AS 'Customer Name', prodid AS 'Product ID', prodname AS 'Product Name', amount AS 'Sale Amount' from sales;

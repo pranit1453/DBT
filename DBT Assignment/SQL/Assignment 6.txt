@@ -1,0 +1,161 @@
+Count total no. of employees.
+Ans select count(*) from emp;
+
+ Determine the maximum and minimum salary.
+Ans select max(sal),min(sal) from emp;
+
+ Display the count of employees having salary greater than 3000.
+Ans select count(*) from emp where sal>3000;
+
+ Print department wise count of employees.
+Ans select deptNo, count(*) as employee_count from emp group by deptNo;
+ 
+Display employee details who earn maximum and minimum salary.
+Ans select * from emp where sal = (select max(sal) from emp);
+     
+ Print jobwise total salary.
+Ans select job,sum(sal) from emp group by job;
+ 
+Print department wise maximum salary.
+Ans select deptNo, max(sal) from emp group by deptNo;
+ 
+Print jobwise average salary.
+Ans select deptNo, max(sal) from emp group by deptNo;
+ 
+Print count of employee working in department 20.
+Ans select count(*) from emp where deptNo=20;
+ 
+Print count of employee working in department 10 having job as MANAGER..
+Ans select count(*) from emp where deptNo=10 and job="MANAGER";
+
+ Print count of employee working in department 20 having comm as null.
+Ans select count(*) from emp where deptNo=20 and comm is null;
+Print names of employees working in ACCOUNTS department having maximum salary.
+
+ Print employee details having salary less than average salary of MANAGER.
+Ans select * from emp where sal<(select avg(sal) from emp where job="MANAGER");
+
+Give SQL statement to find the average annual salary per job in each detp.
+Ans select deptNo,job , avg(sal*12) as avg_annual_sal from emp group by deptNo, job;
+
+Count the number of people in the dept 30 who receive a salary and the no.of people who receive comm.
+Ans select count(sal) as salary,count(comm) as comm from emp where deptNo=30;
+
+Calculate the avg, min and max salary of those groups of employees having the job as CLERK or MANAGER.
+Ans select avg(sal) as average, min(sal) as Min, max(sal) as Max from emp where job in("clerk","manager") group by job;
+
+Display the deptno of departments which have more than one CLERK.
+Ans select deptNo from emp where job="clerk" group by deptNo having count(*)>1;	
+
+List names and hiredates of employees who were hired in the month of December
+Ans select ename , hiredate from emp where month(hiredate)=12;
+
+List names and hiredate of employees hired in the year 1980
+Ans select ename , hiredate from emp where month(hiredate)=12;
+
+Display names and jobs of the people separated by a hyphen. Capitalize the first character of name and job.
+List employee numbers, names and hiredates of the people working in the department number 20, display the hiredates in the dd/mm/yy format
+Ans select empno, ename,date_format(hiredate,'%d/%m/%y') as hiredate from emp where deptNo=20;
+Find number of months the president has worked for the company. 
+
+Find the day of the week on which SMITH joined
+Ans select dayname(hiredate) as day_week from emp where ename='smith';
+
+Find the time of time of the day in which ADAMS joined
+Ans select time(hiredate) as time_joined from emp where ename='adams';
+
+Find day of month on which KING joined
+Ans select day(hiredate) as day from emp where ename='king';
+
+Find out month on which MARTIN joined
+Ans select month(hiredate) as month from emp where ename ='martin';
+
+Find out which quarter of the year the employees joined. Display their number and names as well
+Ans SELECT empno AS 'Employee Number',ename AS 'Employee Name', CASE WHEN MONTH(hiredate) BETWEEN 1 AND 3 THEN 'Q1'  WHEN MONTH(hiredate) BETWEEN 4 AND 6 THEN 'Q2'   WHEN MONTH(hiredate) BETWEEN 7 AND 9 THEN 'Q3' WHEN MONTH(hiredate) BETWEEN 10 AND 12 THEN 'Q4'    END AS 'Joining Quarter' FROM emp;
+
+Retrieve ANALYST records with the hiredate formatted as – ‘The 3rd of December 1984’
+Ans SELECT ename AS 'Employee Name', DATE_FORMAT(hiredate, 'The %D of %M %Y') AS 'Formatted Hiredate'FROM emp WHERE job = 'ANALYST';
+
+List all names, jobs, and a job classification number, which is to be assigned by you. Translate the value started in each job field to a job classification number. This is to be done as follows-
+CLERK
+MANAGER
+PRESIDENT
+OTHER
+Ans SELECT ename AS 'Employee Name', job AS 'Job Title', CASE WHEN job = 'CLERK' THEN 'A' WHEN job = 'MANAGER' THEN 
+
+'B' WHEN job = 'PRESIDENT' THEN 'C' ELSE 'D' END AS 'Job Classification'FROM emp;
+Display the length of the longest employees name 
+Ans SELECT  MAX(LENGTH(ename)) AS 'Longest Name Length' FROM emp;
+
+Write a query to list the length of service of the employees (of the form n years and m months).
+Ans SELECT ename AS 'Employee Name', CONCAT(TIMESTAMPDIFF(YEAR, hiredate, CURDATE()), ' years and ', MOD(TIMESTAMPDIFF(MONTH, hiredate, CURDATE()), 12), ' months'    ) AS  'Length of Service' FROM emp;
+
+How many employees who are joined in 1985.
+Ans select count(*) from emp where year(hiredate) =1985;
+
+How many employees joined each month in 1985.
+Ans select count(*) from emp where 
+
+How many employees who are joined in March 1985.
+Ans SELECT MONTH(hiredate) AS 'Month', COUNT(*) AS 'Employees Joined' FROM emp WHERE YEAR(hiredate) = 1985 GROUP BY MONTH(hiredate) ORDER BY MONTH(hiredate);
+
+Find the total sales amount
+Ans select sum(amount) as 'Total_Amount' from sales;
+
+Find the customer-wise lowest and highest sales amount
+Ans select custID, min(amount), max(amount) from sales group By custID;
+
+Find product-wise lowest, highest and total sales.
+Ans select prodID, min(amount), max(amount), sum(amount) from sales group by prodid;
+
+Find department-wise average salary for all the departments employing more than three employees.
+Ans SELECT deptno AS 'Department Number', AVG(sal) AS 'Average Salary', COUNT(*) AS 'Employee Count'FROM emp GROUP BY deptno HAVING COUNT(*) > 3;
+
+Find the customer-wise total sales for all the customers except ‘TKB SPORT SHOP’ who came to purchase various sports items maximum four times.
+Ans select custname, sum(amount) from sales group by custname having not(custname='TKB SPORT' AND COUNT(*) <= 4);
+
+Display the highest, lowest, sum and average salary for all employees. Label the columns appropriately.
+Ans select max(sal), min(sal), sum(sal), avg(sal) from emp;
+
+Modify the above query and display the output for each job type.
+Ans select max(sal), min(sal), sum(sal), avg(sal) from emp group by job;
+
+List names of people who have salary less than the average salary for dept 20
+Ans SELECT ename FROM emp WHERE sal < (SELECT AVG(sal) FROM emp WHERE deptno = 20);
+
+Find the average annual salary per job in each department. 
+Ans SELECT deptno, job, AVG(sal * 12) AS avg_annual_salary FROM emp GROUP BY deptno, job;
+
+Count the number of people in department 30 who receive a salary and the number of people who receive a commission
+Ans SELECT COUNT(CASE WHEN sal IS NOT NULL THEN 1 END) AS salary_count,COUNT(CASE WHEN comm IS NOT NULL THEN 1 END) AS commission_count FROM emp WHERE deptno = 30;
+
+Compute the average, minimum and maximum salaries of these groups of employees having job as Clerk or manager, Display the job as well
+Ans SELECT job, AVG(sal) AS avg_salary, MIN(sal) AS min_salary, MAX(sal) AS max_salary FROM emp WHERE job IN ('CLERK', 'MANAGER') GROUP BY job;
+
+Write an SQL command that displays 2nd highest salary paid
+Ans SELECT MAX(sal) AS second_highest_salary FROM emp WHERE sal < (SELECT MAX(sal) FROM emp);
+
+Write a query to find the employees who are earning the maximum salary in their departments.
+Ans SELECT ename, deptno, sal FROM emp e WHERE sal = (SELECT MAX(sal) FROM emp WHERE deptno = e.deptno);
+
+Write a query to find the salesman number (repid) who has achieved the maximum total sales among the entire salesman.
+List the highest salary paid for each job
+Ans SELECT job, MAX(sal) AS highest_salary FROM emp GROUP BY job;
+
+Find the most recently hired employee in each department.
+Ans SELECT deptno, ename, hiredate FROM emp e WHERE hiredate = (SELECT MAX(hiredate) FROM emp WHERE deptno = e.deptno);
+
+In which year did most people join the company? Display the year and the number of employees.
+Ans SELECT EXTRACT(YEAR FROM hiredate) AS year, COUNT(*) AS num_employees FROM emp GROUP BY EXTRACT(YEAR FROM hiredate) ORDER BY num_employees DESC LIMIT 1;
+
+Write a query to display employee name whose name occurs only once in the table.
+Ans SELECT ename FROM emp GROUP BY ename HAVING COUNT(*) = 1;
+
+Write a query to display all the details from dept table along with the no. of employee working in each dept.
+Ans SELECT d.*, COUNT(e.empno) AS num_employees FROM dept d LEFT JOIN emp e ON d.deptno = e.deptno GROUP BY d.deptno, d.dname, d.loc;
+
+Find out which department does not have any employees.
+Ans SELECT d.deptno, d.dname FROM dept d LEFT JOIN emp e ON d.deptno = e.deptno WHERE e.empno IS NULL;
+
+List out the no. of employees joined in every month in ascending order.
+Ans SELECT EXTRACT(YEAR FROM hiredate) AS year, COUNT(*) AS num_employees FROM emp GROUP BY EXTRACT(YEAR FROM hiredate) ORDER BY year;

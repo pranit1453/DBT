@@ -1,0 +1,78 @@
+1.Display the Employee Name, Job, and Start Date of Employees hired from February 1981 to May 1981.
+mysql> SELECT ename, job, hiredate FROM emp WHERE hiredate BETWEEN '1981-02-01' AND '1981-05-31';
+
+2.Display the Name and Hiredate of every Employee who was hired in 1982.
+mysql> SELECT ename, hiredate FROM emp WHERE YEAR(hiredate) = 1982;
+
+3.Write a query to display the current date. Label the column as Current Date.
+SELECT CURDATE() AS 'Current Date';
+
+4.Display the Employee’s Name, Hiredate, Salary and Review Date, which is first Monday after six months of service.
+mysql> SELECT ename, hiredate,sal,DATE_ADD(hiredate, INTERVAL 6 MONTH) AS'Six Months Later',DATE_ADD(DATE_ADD(hiredate, INTERVAL 6 MONTH),  INTERVAL (8 - DAYOFWEEK(DATE_ADD(hiredate, INTERVAL 6 MONTH))) % 7 DAY) AS 'Review Date'FROM emp;
+
+5.Modify the query to display the dates as “Sunday, the Seventh of September, 1981”.
+
+
+6.Create a query to display the name and salary for all Employees. Format the salary to be 15 characters long by adding ‘$’.
+mysql> SELECT DATE_FORMAT(hiredate, '%W, the %D of %M, %Y') AS 'Formatted Date' FROM emp;
+
+7.Display the Name, Hiredate and day of the week on which the employees started. Order the results by the Day of the week starting with Monday.
+mysql> SELECT ename, hiredate, DAYNAME(hiredate) AS 'Start Day' FROM emp ORDER BY FIELD(DAYNAME(hiredate), 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+
+8.Display details of orders received in the year 1986.
+mysql> SELECT * FROM ord WHERE YEAR(orderdate) = 1986;
+ 
+9.Write a query to find out the DAY (for example, SUNDAY) of the current date.
+mysql> SELECT DAYNAME(CURDATE()) AS 'Today is';
+
+10.Display the name and the date of joining of the employees who belong to department number 10. The date of joining should be formatted. For eg. if it is ‘10-JUN-97’ it should be displayed as Fifteenth JUNE, 1997. The name of the employee should be in upper case.
+mysql> SELECT UPPER(ename) AS 'Employee Name', DATE_FORMAT(hiredate, 'The %D %M, %Y') AS 'Joining Date' FROM emp WHERE deptno = 10;
+
+11.Consider the Ord table. Find the difference between the Order Date and Ship Date in months as well as days. Label the columns appropriately.
+
+
+12.List employee details who have joined in December.
+mysql> SELECT * FROM emp WHERE MONTH(hiredate) = 12;
+
+13.Display day on which KING joined.
+mysql> SELECT DAYNAME(hiredate) AS 'Day Joined' FROM emp WHERE ename = 'KING';
+
+14.Display month on which MARTIN joined.
+mysql> SELECT MONTHNAME(hiredate) AS 'Month Joined' FROM emp WHERE ename = 'MARTIN';
+
+15.Find number of days elapsed between today’s date and hiredate of ‘ADAMS’.
+mysql> SELECT DATEDIFF(CURDATE(), hiredate) AS 'Days Since Hire' FROM emp WHERE ename = 'ADAMS';
+
+16.Print the date, 15 days alter today’s date.
+mysql> SELECT CURDATE() + INTERVAL 15 DAY AS 'Future Date';
+
+17.List all employee hired in the month of December.
+mysql> SELECT * FROM emp WHERE MONTH(hiredate) = 12;
+
+18.List all employee hired after 1980.
+mysql> SELECT * FROM emp WHERE YEAR(hiredate) > 1980;
+
+19.Display names and jobs of employee in the format SMITH-CLERK.
+mysql> SELECT CONCAT(ename, '-', job) AS 'Employee-Job' FROM emp;
+
+20.Show the length of names in EMP table. Eliminate duplicate length. Do not show the names.
+mysql> SELECT DISTINCT LENGTH(ename) AS 'Name Length' FROM emp;
+
+21.List the names and hiredate of EMP in dept 20, display hiredate formatted as 12/03/1984.
+mysql> SELECT ename, DATE_FORMAT(hiredate, '%d/%m/%Y') AS 'Formatted Hiredate' FROM emp WHERE deptno = 20;
+
+22.Find the day of week on which SMITH joined.
+mysql> SELECT DAYNAME(hiredate) AS 'Day Joined' FROM emp WHERE ename = 'SMITH';
+
+23.Retrieve the ANALYST record with hiredate formatted as ‘The 3rd of Oct. 1984’.
+mysql> SELECT ename, DATE_FORMAT(hiredate, 'The %D of %b. %Y') AS 'Formatted Hiredate' FROM emp WHERE job = 'ANALYST';
+
+24.Calculate the total compensation expensive for each dept in 1 year. Assume that employees, who don't earn commission, receive non-monetary benefits than are worth Rs.1000 a month.
+mysql> SELECT deptno,   SUM(sal * 12 + IFNULL(comm, 0) + IF(comm IS NULL, 1000 * 12, 0)) AS 'Annual Compensation' FROM emp GROUP BY deptno;
+
+25.Display the Names of the Managers as follows-
+a.If the employee code is 7788 the Manager is CLARK
+b.If the employee code is 7698 the Manager is BLAKE
+c.If the employee code is 7566 the Manager is JONES
+d.For all other Employees the Manager is KING
+mysql> SELECT empno, ename,   CASE empno WHEN 7788 THEN 'CLARK' WHEN 7698 THEN 'BLAKE' WHEN 7566 THEN 'JONES' ELSE 'KING' END AS 'Manager' FROM emp;
